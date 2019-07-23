@@ -39,6 +39,10 @@ install:
 
 build_script:
   - cmd: |
+      git clone git://git.blender.org/blender.git %APPVEYOR_BUILD_FOLDER%
+      git submodule update --init --recursive
+      git submodule foreach git checkout master
+      git submodule foreach git pull --rebase origin master
       if "%TARGET_PLATFORM%"=="x86" (svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/windows_vc14 ../lib/windows_vc14)
       if "%TARGET_PLATFORM%"=="x64" (svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/win64_vc14 ../lib/win64_vc14)
       mkdir build
@@ -46,3 +50,12 @@ build_script:
       cmake --version
       cmake . -G %generator% -DCMAKE_BUILD_TYPE=Release ..
       cmake --build . --target PACKAGE
+after_build:
+  - '7z a biud.zip %APPVEYOR_BUILD_FOLDER%\build\'
+  
+artifacts:
+  -
+    path: biud.zip
+    name: Binari
+
+
