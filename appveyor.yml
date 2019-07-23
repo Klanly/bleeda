@@ -39,7 +39,9 @@ install:
 
 build_script:
   - cmd: |
-      git clone git://git.blender.org/blender.git %APPVEYOR_BUILD_FOLDER%
+      md bld
+      cd bld
+      git clone git://git.blender.org/blender.git %APPVEYOR_BUILD_FOLDER%\bld
       git submodule update --init --recursive
       git submodule foreach git checkout master
       git submodule foreach git pull --rebase origin master
@@ -51,7 +53,7 @@ build_script:
       cmake . -G %generator% -DCMAKE_BUILD_TYPE=Release ..
       cmake --build . --target PACKAGE
 after_build:
-  - '7z a biud.zip %APPVEYOR_BUILD_FOLDER%\build\'
+  - '7z a biud.zip %APPVEYOR_BUILD_FOLDER%\bld\build\'
   
 artifacts:
   -
