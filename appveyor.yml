@@ -51,7 +51,7 @@ build_script:
       cd build
       cmake --version
       cmake . -G %generator% -DCMAKE_BUILD_TYPE=Release ..
-#      cmake --build . --target PACKAGE
+      cmake --build . --target PACKAGE
 after_build:
   - '7z a %APPVEYOR_BUILD_FOLDER%\biud.7z %APPVEYOR_BUILD_FOLDER%\bld\build\ -mx9 -mqs'
   
