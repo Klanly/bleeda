@@ -43,7 +43,7 @@ build_script:
       cd bld
       md blender
       cd blender
-      git clone git://git.blender.org/blender.git %APPVEYOR_BUILD_FOLDER%\bld
+      git clone git://git.blender.org/blender.git %APPVEYOR_BUILD_FOLDER%\bld\blender
 
       svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/win64_vc15 ../lib/win64_vc15
       make.bat full nobuild
