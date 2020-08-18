@@ -45,10 +45,10 @@ build_script:
       cd blender
       git clone git://git.blender.org/blender.git %APPVEYOR_BUILD_FOLDER%\bld\blender
 
-      svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/win64_vc15 ../lib/win64_vc15
+      svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/win64_vc15 ../lib/win64_vc15 >>..\..\xx.txt
       make.bat full nobuild
 after_build:
-  - '7z a %APPVEYOR_BUILD_FOLDER%\biud.7z %APPVEYOR_BUILD_FOLDER%\bld\ -mx9 -mqs'
+  - '7z a -mqs -ms=on %APPVEYOR_BUILD_FOLDER%\bld\build_windows_Full_x64_vc16_Release %APPVEYOR_BUILD_FOLDER%\biud.7z'
   
 artifacts:
   -
