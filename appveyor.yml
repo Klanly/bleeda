@@ -39,8 +39,10 @@ install:
 
 build_script:
   - cmd: |
-      md bld/blender
-      cd bld/blender
+      md bld
+      cd bld
+      md blender
+      cd blender
       git clone git://git.blender.org/blender.git %APPVEYOR_BUILD_FOLDER%\bld
 
       svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/win64_vc15 ../lib/win64_vc15
