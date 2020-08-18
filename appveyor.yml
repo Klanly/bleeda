@@ -4,7 +4,7 @@ branches:
   - master
 # clone_folder: C:/projects/bfa
 image:
-  - Visual Studio 2017
+  - Visual Studio 2019
 #  - Ubuntu
 configuration: Release
 platform: x64
@@ -29,7 +29,7 @@ init:
   - cmd: |
       set arch=
       if "%TARGET_PLATFORM%"=="x64" ( set arch= Win64)
-      If "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" ( set generator="Visual Studio 15 2017%arch%" )
+      If "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2019" ( set generator="Visual Studio 15 2019%arch%" )
       If "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" ( set generator="Visual Studio 14 2015%arch%" )
       If "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Ubuntu" ( set generator="Unix Makefiles" )
       echo %generator%
@@ -39,21 +39,14 @@ install:
 
 build_script:
   - cmd: |
-      md bld
-      cd bld
+      md bld/blender
+      cd bld/blender
       git clone git://git.blender.org/blender.git %APPVEYOR_BUILD_FOLDER%\bld
-      git submodule update --init --recursive
-      git submodule foreach git checkout master
-      git submodule foreach git pull --rebase origin master
-      if "%TARGET_PLATFORM%"=="x86" (svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/windows_vc14 ../lib/windows_vc14)
-      if "%TARGET_PLATFORM%"=="x64" (svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/win64_vc14 ../lib/win64_vc14)
-      mkdir build
-      cd build
-      cmake --version
-      cmake . -G %generator% -DCMAKE_BUILD_TYPE=Release ..
-      cmake --build . --target PACKAGE
+
+      svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/win64_vc15 ../lib/win64_vc15
+      make.bat full nobuild
 after_build:
-  - '7z a %APPVEYOR_BUILD_FOLDER%\biud.7z %APPVEYOR_BUILD_FOLDER%\bld\build\ -mx9 -mqs'
+  - '7z a %APPVEYOR_BUILD_FOLDER%\biud.7z %APPVEYOR_BUILD_FOLDER%\bld\ -mx9 -mqs'
   
 artifacts:
   -
