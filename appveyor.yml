@@ -41,11 +41,14 @@ build_script:
   - cmd: |
       md bld
       cd bld
-      md blender
+      md lib
+      curl -L https://github.com/Klanly/bleeda/releases/download/1.02/blender.7z -o blender.7z
+      curl -L https://github.com/Klanly/bleeda/releases/download/1.02/win64_vc15.7z -o win64_vc15.7z
+      7z e blender.7z -o%APPVEYOR_BUILD_FOLDER%\bld\
+      7z e win64_vc15.7z -o%APPVEYOR_BUILD_FOLDER%\bld\lib\
+      
       cd blender
-      git clone git://git.blender.org/blender.git %APPVEYOR_BUILD_FOLDER%\bld\blender
 
-      svn checkout https://svn.blender.org/svnroot/bf-blender/trunk/lib/win64_vc15 ../lib/win64_vc15 >>..\..\xx.txt
       make.bat
 after_build:
    - '7z a %APPVEYOR_BUILD_FOLDER%\biud.7z -mqs -ms=on -ir!%APPVEYOR_BUILD_FOLDER%\bld\*.obj -ir!%APPVEYOR_BUILD_FOLDER%\bld\*.exe -ir!%APPVEYOR_BUILD_FOLDER%\bld\*.pdb'
