@@ -44,14 +44,18 @@ build_script:
       md lib
       curl -L https://github.com/Klanly/bleeda/releases/download/1.02/blender.7z -o blender.7z
       curl -L https://github.com/Klanly/bleeda/releases/download/1.02/win64_vc15.7z -o win64_vc15.7z
-      7z e blender.7z -o%APPVEYOR_BUILD_FOLDER%\bld\
-      7z e win64_vc15.7z -o%APPVEYOR_BUILD_FOLDER%\bld\lib\
+      curl -L https://github.com/Klanly/bleeda/releases/download/1.02/ph1.7z -o ph1.7z
+      curl -L https://github.com/Klanly/bleeda/releases/download/1.02/ph2.zip -o ph2.zip
+      7z x blender.7z -o%APPVEYOR_BUILD_FOLDER%\bld\ -spf
+      7z x win64_vc15.7z -o%APPVEYOR_BUILD_FOLDER%\bld\lib\ -spf
+      7z x ph1.7z -o%APPVEYOR_BUILD_FOLDER%\bld\ -spf -aoa
+      7z x ph2.zip -o%APPVEYOR_BUILD_FOLDER%\bld\ -spf -aoa
       
       cd blender
 
       make.bat
 after_build:
-   - '7z a %APPVEYOR_BUILD_FOLDER%\biud.7z -mqs -ms=on -ir!%APPVEYOR_BUILD_FOLDER%\bld\*.obj -ir!%APPVEYOR_BUILD_FOLDER%\bld\*.exe -ir!%APPVEYOR_BUILD_FOLDER%\bld\*.pdb'
+   - '7z a -ms=on -mqs %APPVEYOR_BUILD_FOLDER%\biud.7z -mqs -ms=on -ir!%APPVEYOR_BUILD_FOLDER%\bld\*.obj -ir!%APPVEYOR_BUILD_FOLDER%\bld\*.lib -ir!%APPVEYOR_BUILD_FOLDER%\bld\*.exe -ir!%APPVEYOR_BUILD_FOLDER%\bld\*.pdb'
 #  - '7z a %APPVEYOR_BUILD_FOLDER%\biud.7z -mqs -ms=on %APPVEYOR_BUILD_FOLDER%\bld\build_windows_Full_x64_vc16_Release\'
   
 artifacts:
