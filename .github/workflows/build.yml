@@ -35,7 +35,6 @@ jobs:
           Invoke-WebRequest -Uri https://github.com/Klanly/bleeda/releases/download/1.02/win64_vc15.7z -OutFile win64_vc15.7z
           7z x blender.7z -oC:\bld\ -spf
           7z x win64_vc15.7z -oC:\bld\lib\ -spf
-          dir C:\bld\blender C:\bld\logg.txt
           cd C:\bld\blender
         
         
