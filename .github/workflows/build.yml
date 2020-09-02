@@ -28,6 +28,7 @@ jobs:
         run: |
           C:
           cd /
+          md "Program Files\NVIDIA GPU Computing Toolkit\CUDA"
           md bld
           cd bld
           md cuda
@@ -44,6 +45,7 @@ jobs:
           7z x blender.7z -spf
           7z x ph1.7z -spf -aoa
           7z x ph2.zip -spf -aoa
+          mklink /J "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2" C:\bld\cuda
 
           cd C:\bld\blender
           dir > C:\bld\logg.txt
@@ -65,6 +67,7 @@ jobs:
           CUDA_TOOLKIT_ROOT_DIR: C:\bld\cuda
           CUDA_PATH: C:\bld\cuda
           CUDA_PATH_V10_1: C:\bld\cuda
+          CUDA_PATH_V10_2: C:\bld\cuda
       
       - name: Build
         if: always()
@@ -76,11 +79,18 @@ jobs:
           CUDA_TOOLKIT_ROOT_DIR: C:\bld\cuda
           CUDA_PATH: C:\bld\cuda
           CUDA_PATH_V10_1: C:\bld\cuda
+          CUDA_PATH_V10_2: C:\bld\cuda
         
+      - name: logs2
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: bldlog
+          path: C:\bld\build_windows_x64_vc16_Release\Build.log
         
       - name: ziping
         if: always()
-        run: 7z a C:\bld\biud.7z -mqs -ms=on -ir!C:\bld\*.obj -ir!C:\bld\*.exe -ir!C:\bld\*.pdb -ir!C:\bld\*.lib
+        run: 7z a C:\bld\biud.7z "C:\bld\build_windows_x64_vc16_Release" -mqs -ms=on
           
       - name: uploadexe
         if: always()
