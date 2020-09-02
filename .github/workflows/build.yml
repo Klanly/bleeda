@@ -45,7 +45,7 @@ jobs:
           7z x blender.7z -spf
           7z x ph1.7z -spf -aoa
           7z x ph2.zip -spf -aoa
-          mklink /J "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2" C:\bld\cuda
+          
 
           cd C:\bld\blender
           dir > C:\bld\logg.txt
@@ -57,7 +57,12 @@ jobs:
         with:
           name: cdlog
           path: C:\bld\logg.txt
-
+         
+      - name: mkklink
+        if: always()
+        shell: cmd
+        run: mklink /J "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2" C:\bld\cuda
+        
       - name: nvccv
         if: always()
         run: nvcc -V
