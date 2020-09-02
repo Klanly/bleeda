@@ -47,6 +47,7 @@ jobs:
 
           cd C:\bld\blender
           dir > C:\bld\logg.txt
+          echo "::add-path::C:\bld\cuda\nvvm\bin;C:\bld\cuda\bin"
         
       - name: logs1
         if: always()
@@ -64,7 +65,6 @@ jobs:
           CUDA_TOOLKIT_ROOT_DIR: C:\bld\cuda
           CUDA_PATH: C:\bld\cuda
           CUDA_PATH_V10_1: C:\bld\cuda
-          PATH: C:\bld\cuda\nvvm\bin;C:\bld\cuda\bin;%PATH%
       
       - name: Build
         if: always()
@@ -76,7 +76,6 @@ jobs:
           CUDA_TOOLKIT_ROOT_DIR: C:\bld\cuda
           CUDA_PATH: C:\bld\cuda
           CUDA_PATH_V10_1: C:\bld\cuda
-          PATH: C:\bld\cuda\nvvm\bin;C:\bld\cuda\bin;%PATH%
         
         
       - name: ziping
