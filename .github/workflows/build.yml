@@ -19,10 +19,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      
       # Runs a set of commands using the runners shell
       - name: prep
         run: |
@@ -61,7 +57,10 @@ jobs:
       - name: mkklink
         if: always()
         shell: cmd
-        run: mklink /J "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2" C:\bld\cuda
+        run: |
+          mklink /J "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2" C:\bld\cuda
+          mklink /J "C:\zwant" C:\bld\build_windows_Bpy_x64_vc16_Release
+          # C:\bld\build_windows_x64_vc16_Release
         
       - name: nvccv
         if: always()
@@ -91,11 +90,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: bldlog
-          path: C:\bld\build_windows_x64_vc16_Release\Build.log
+          path: C:\zwant\Build.log
         
       - name: ziping
         if: always()
-        run: 7z a C:\bld\biud.7z "C:\bld\build_windows_x64_vc16_Release" -mqs -ms=on
+        run: 7z a C:\bld\biud.7z "C:\zwant" -mqs -ms=on
           
       - name: uploadexe
         if: always()
