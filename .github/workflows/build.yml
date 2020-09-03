@@ -86,14 +86,7 @@ jobs:
           CUDA_PATH: C:\bld\cuda
           CUDA_PATH_V10_1: C:\bld\cuda
           CUDA_PATH_V10_2: C:\bld\cuda
-        
-      - name: logs2
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: bldlog
-          path: C:\zwant\Build.log
-        
+                
       - name: ziping
         if: always()
         run: 7z a C:\bld\biud.7z "C:\zwant" -mqs -ms=on
