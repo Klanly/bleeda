@@ -43,7 +43,6 @@ jobs:
           7z x ph1.7z -spf -aoa
           7z x ph2.zip -spf -aoa
           
-
           cd C:\bld\blender
           dir > C:\bld\logg.txt
           echo "::add-path::C:\bld\cuda\nvvm\bin;C:\bld\cuda\bin"
