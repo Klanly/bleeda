@@ -43,7 +43,7 @@ jobs:
         shell: cmd
       - name: ziping
         if: always()
-        run: 7z a C:\llvmbd.7z C:\blender-git\build_windows
+        run: 7z a C:\llvmbd.7z C:\blender-git\build_windows_x64_vc17_Release
           
       - name: uploadexe
         if: always()
