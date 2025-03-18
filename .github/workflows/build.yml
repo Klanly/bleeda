@@ -23,15 +23,16 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: prep
         run: |
+          set BUILD_WITH_NINJA=1
           pip install ninja
           C:
           md C:\blender-git
           cd C:\blender-git
           git clone https://projects.blender.org/blender/blender.git
           cd C:\blender-git\blender
-          set BUILD_WITH_NINJA=1
           make update
           make.bat
+        shell: cmd
         
 
                 
