@@ -34,7 +34,13 @@ jobs:
           make.bat
           make.bat
         shell: cmd
-         
+      - name: prep2
+        run: |
+          set BUILD_WITH_NINJA=1
+          C:
+          cd C:\blender-git\blender
+          make.bat
+        shell: cmd
       - name: ziping
         if: always()
         run: 7z a C:\llvmbd.7z C:\blender-git\build_windows
