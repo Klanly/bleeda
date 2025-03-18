@@ -31,7 +31,8 @@ jobs:
           git clone -b blender-v4.4-release https://github.com/Klanly/blender.git
           cd C:\blender-git\blender
           make update
-          echo Y | make.bat
+          make.bat
+          make.bat
         shell: cmd
          
       - name: ziping
