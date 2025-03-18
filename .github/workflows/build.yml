@@ -29,8 +29,9 @@ jobs:
           cd C:\blender-git
           git clone https://projects.blender.org/blender/blender.git
           cd C:\blender-git\blender
+          set BUILD_WITH_NINJA=1
           make update
-          make ninja
+          make.bat
         
 
                 
