@@ -28,14 +28,12 @@ jobs:
           C:
           md C:\blender-git
           cd C:\blender-git
-          git clone https://projects.blender.org/blender/blender.git
+          git clone -b blender-v4.4-release https://github.com/Klanly/blender.git
           cd C:\blender-git\blender
           make update
           echo Y | make.bat
         shell: cmd
-        
-
-                
+         
       - name: ziping
         if: always()
         run: 7z a C:\llvmbd.7z C:\blender-git\build_windows
