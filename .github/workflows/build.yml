@@ -23,85 +23,25 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: prep
         run: |
+          pip install ninja
           C:
-          cd /
-          md "Program Files\NVIDIA GPU Computing Toolkit\CUDA"
-          md bld
-          cd bld
-          md cuda
-          md lib
-          Invoke-WebRequest -Uri https://github.com/Klanly/bleeda/releases/download/1.02/cud.7z -OutFile cud.7z
-          Invoke-WebRequest -Uri https://github.com/Klanly/bleeda/releases/download/1.02/blender.7z -OutFile blender.7z
-          Invoke-WebRequest -Uri https://github.com/Klanly/bleeda/releases/download/1.02/win64_vc15.7z -OutFile win64_vc15.7z
-          Invoke-WebRequest -Uri https://github.com/Klanly/bleeda/releases/download/1.02/ph1.7z -OutFile ph1.7z
-          Invoke-WebRequest -Uri https://github.com/Klanly/bleeda/releases/download/1.02/ph2.zip -OutFile ph2.zip
-          
-          7z x cud.7z -oC:\bld\cuda\ -spf
-          
-          7z x win64_vc15.7z -oC:\bld\lib\ -spf
-          7z x blender.7z -spf
-          7z x ph1.7z -spf -aoa
-          7z x ph2.zip -spf -aoa
-          
-          cd C:\bld\blender
-          dir > C:\bld\logg.txt
-          echo "::add-path::C:\bld\cuda\nvvm\bin;C:\bld\cuda\bin"
+          md C:\blender-git
+          cd C:\blender-git
+          git clone https://projects.blender.org/blender/blender.git
+          cd C:\blender-git\blender
+          make update
+          make ninja
         
-      - name: logs1
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: cdlog
-          path: C:\bld\logg.txt
-         
-      # C:\bld\build_windows_x64_vc16_Release
-      - name: mkklink
-        if: always()
-        shell: cmd
-        run: |
-          mklink /J "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2" C:\bld\cuda
-          mklink /J "C:\zwant" C:\bld\build_windows_Bpy_x64_vc16_Release
-          
-        
-      - name: nvccv
-        if: always()
-        run: nvcc -V
-        env:
-          CUDACXX: C:\bld\cuda\bin
-          CMAKE_CUDA_COMPILER: C:\bld\cuda\bin
-          CUDA_TOOLKIT_ROOT_DIR: C:\bld\cuda
-          CUDA_PATH: C:\bld\cuda
-          CUDA_PATH_V10_1: C:\bld\cuda
-          CUDA_PATH_V10_2: C:\bld\cuda
-      
-      - name: Build
-        if: always()
-        shell: cmd
-        run: C:\bld\blender\make.bat bpy
-        env:
-          CUDACXX: C:\bld\cuda\bin
-          CMAKE_CUDA_COMPILER: C:\bld\cuda\bin
-          CUDA_TOOLKIT_ROOT_DIR: C:\bld\cuda
-          CUDA_PATH: C:\bld\cuda
-          CUDA_PATH_V10_1: C:\bld\cuda
-          CUDA_PATH_V10_2: C:\bld\cuda
+
                 
       - name: ziping
         if: always()
-        run: 7z a C:\bld\biud.7z "C:\zwant" -mqs -ms=on
+        run: 7z a C:\llvmbd.7z C:\blender-git\build_windows
           
       - name: uploadexe
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: exacu
-          path: C:\bld\biud.7z
-          
-          
-        
-      - name: logs
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: chklog
-          path: C:\bld\logg.txt
+          name: ninjpf
+          path: C:\llvmbd.7z
+          compression-level: 0
