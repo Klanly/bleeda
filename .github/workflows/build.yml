@@ -31,7 +31,7 @@ jobs:
           git clone https://projects.blender.org/blender/blender.git
           cd C:\blender-git\blender
           make update
-          make.bat
+          echo Y | make.bat
         shell: cmd
         
 
