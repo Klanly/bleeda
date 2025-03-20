@@ -21,34 +21,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       # Runs a set of commands using the runners shell
-      - name: prep
-        run: |
-          set BUILD_WITH_NINJA=1
-          pip install ninja
-          C:
-          md C:\blender-git
-          cd C:\blender-git
-          git clone -b blender-v4.4-release https://github.com/Klanly/blender.git
-          cd C:\blender-git\blender
-          make update
-          make.bat
-          make.bat
-        shell: cmd
-      - name: prep2
-        run: |
-          set BUILD_WITH_NINJA=1
-          C:
-          cd C:\blender-git\blender
-          make.bat
-        shell: cmd
       - name: ziping
         if: always()
-        run: 7z a C:\llvmbd.7z C:\blender-git\build_windows_x64_vc17_Release
+        run: 7z a C:\llvmbd.7z "C:\PROGRAM FILES\MICROSOFT VISUAL STUDIO\2022\ENTERPRISE\VC\TOOLS\MSVC\14.43.34808\LIB\X64\*.lib"
           
       - name: uploadexe
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ninjpf
+          name: liblny
           path: C:\llvmbd.7z
           compression-level: 0
